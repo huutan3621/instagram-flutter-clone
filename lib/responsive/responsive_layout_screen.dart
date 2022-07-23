@@ -13,6 +13,7 @@ class ResponsiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //LayoutBuilder widget works as a Builder widget but except it can shrinks the size
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth > webScreenSize) {
