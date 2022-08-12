@@ -68,17 +68,19 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             height: 24,
           ),
-          //button
-          Container(
-            child: const Text('Login'),
-            width: double.infinity,
-            alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: 12),
-            decoration: ShapeDecoration(
-              color: blueColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8),
+          //button. Use InkWell top able to tap and click and use container to create a button
+          InkWell(
+            child: Container(
+              child: const Text('Login'),
+              width: double.infinity,
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(vertical: 12),
+              decoration: ShapeDecoration(
+                color: blueColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
+                  ),
                 ),
               ),
             ),
@@ -98,7 +100,19 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Container(
                 child: Text("Don't have an account?"),
-              )
+                padding: const EdgeInsets.symmetric(vertical: 8),
+              ),
+              //use GestureDector not InkWell because this is a line of text
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  child: Text(
+                    "Sign up.",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                ),
+              ),
             ],
           )
         ],
