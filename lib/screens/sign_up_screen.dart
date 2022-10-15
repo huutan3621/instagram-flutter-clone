@@ -51,6 +51,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
             SizedBox(
               height: 64,
             ),
+            //avatar
+            Stack(
+              children: [
+                const CircleAvatar(
+                  radius: 64,
+                  backgroundImage: NetworkImage(
+                      'https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png'),
+                ),
+                Positioned(
+                  bottom: -10,
+                  left: 80,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.add_a_photo_rounded),
+                  ),
+                )
+              ],
+            ),
+
+            SizedBox(
+              height: 24,
+            ),
+
             //username input
             TextFieldInput(
               textEditingController: _usernameController,
@@ -109,6 +132,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
             SizedBox(
               height: 12,
             ),
+
+            Flexible(
+              child: Container(),
+              flex: 2,
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  child: Text("Don't have an account?"),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                ),
+                //use GestureDector not InkWell because this is a line of text
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    child: Text(
+                      "Sign up.",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       )),
