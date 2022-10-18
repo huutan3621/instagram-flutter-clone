@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_instagram_clone/resources/auth_methods.dart';
 import 'package:flutter_instagram_clone/utils/colors.dart';
+import 'package:flutter_instagram_clone/utils/utils.dart';
 import 'package:flutter_instagram_clone/widgets/text_field_input.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -16,6 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  Uint8List? _image;
 
   //dispose
   @override
@@ -26,6 +31,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _passwordController.dispose();
     _bioController.dispose();
     _usernameController.dispose();
+  }
+
+  void selectImage() async {
+    Uint8List imageSelect = await pickImage(ImageSource.gallery);
+
+    setState(() {
+      _image = imageSelect;
+    });
   }
 
   @override
@@ -54,16 +67,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
             //avatar
             Stack(
               children: [
-                const CircleAvatar(
-                  radius: 64,
-                  backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png'),
-                ),
+                _image != null
+                    ? CircleAvatar(
+                        radius: 64,
+                        backgroundImage: MemoryImage(_image!),
+                      )
+                    : CircleAvatar(
+                        radius: 64,
+                        backgroundImage: NetworkImage(
+                            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png'),
+                      ),
                 Positioned(
                   bottom: -10,
                   left: 80,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: selectImage,
                     icon: Icon(Icons.add_a_photo_rounded),
                   ),
                 )
@@ -114,6 +132,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
             //button
             InkWell(
+              onTap: () async {
+                String res = await AuthMethods().SignUpUser(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                  username: _usernameController.text,
+                  bio: _bioController.text,
+                  file: _image!,
+                );
+                print(res);
+              },
               child: Container(
                 child: Text('Sign Up'),
                 alignment: Alignment.center,

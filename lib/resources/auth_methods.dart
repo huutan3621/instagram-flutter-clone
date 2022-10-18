@@ -33,12 +33,15 @@ class AuthMethods {
         print(cred.user!.uid);
         //add user to our database
         //user can't be returned as null
-        _firestore.collection('user').doc(cred.user!.uid).set({
-          'username':username,
-          'uid':cred.user!.uid,
-          
-
-        }); 
+        await _firestore.collection('user').doc(cred.user!.uid).set({
+          'username': username,
+          'uid': cred.user!.uid,
+          'email': email,
+          'bio': bio,
+          'followers': [], //follow is a list of users
+          'following': [],
+        });
+        res = 'success';
       }
     } catch (err) {
       res = err.toString();

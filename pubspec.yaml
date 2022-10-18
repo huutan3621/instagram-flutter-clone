@@ -35,6 +35,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^1.1.1+1
+  image_picker: ^0.8.6
 
 
 dev_dependencies:
