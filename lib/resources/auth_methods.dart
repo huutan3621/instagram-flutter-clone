@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_instagram_clone/resources/storage_methods.dart';
 
 class AuthMethods {
   //use instance to call multiple function on firebase auth
@@ -31,6 +32,9 @@ class AuthMethods {
             email: email, password: password);
 
         print(cred.user!.uid);
+
+        String photoUrl = await StorageMethod()
+            .uploadImageToFirebase('profilePics', file, false);
         //add user to our database
         //user can't be returned as null
         await _firestore.collection('user').doc(cred.user!.uid).set({
@@ -40,6 +44,7 @@ class AuthMethods {
           'bio': bio,
           'followers': [], //follow is a list of users
           'following': [],
+          'photoUrl': photoUrl,
         });
         res = 'success';
       }
