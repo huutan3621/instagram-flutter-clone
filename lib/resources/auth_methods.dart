@@ -48,6 +48,14 @@ class AuthMethods {
         });
         res = 'success';
       }
+
+      // } on FirebaseAuthException catch (err) {
+      //   //catch email error
+      //   if (err.code == 'firebase_auth/invalid-email') {
+      //     res = 'The email is badly formatted';
+      //   } else if (err.code == 'firebase_auth/weak-password') {
+      //     res = 'Password should be at least 6 characters';
+      //   }
     } catch (err) {
       res = err.toString();
     }
