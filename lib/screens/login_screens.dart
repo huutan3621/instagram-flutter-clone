@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_instagram_clone/resources/auth_methods.dart';
 import 'package:flutter_instagram_clone/utils/colors.dart';
+import 'package:flutter_instagram_clone/utils/utils.dart';
 import 'package:flutter_instagram_clone/widgets/text_field_input.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -14,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //text editing controller for email and password
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   //dispose method called when this removed from tree completely
   @override
@@ -22,6 +25,26 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    if (res == "success") {
+      //
+    } else {
+      //
+      showSnackBar(res, context);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -68,10 +91,17 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             height: 24,
           ),
-          //button. Use InkWell top able to tap and click and use container to create a button
+          //button login. Use InkWell top able to tap and click and use container to create a button
           InkWell(
+            onTap: loginUser,
             child: Container(
-              child: const Text('Login'),
+              child: _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: primaryColor,
+                      ),
+                    )
+                  : const Text('Login'),
               width: double.infinity,
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical: 12),

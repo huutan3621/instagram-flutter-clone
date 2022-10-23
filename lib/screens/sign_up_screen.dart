@@ -196,7 +196,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   onTap: () {},
                   child: Container(
                     child: Text(
-                      "Sign up.",
+                      "Sign in.",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 8),
