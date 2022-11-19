@@ -7,6 +7,11 @@ import 'package:flutter_instagram_clone/widgets/text_field_input.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
+import 'login_screens.dart';
+
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
 
@@ -56,10 +61,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (res != 'success') {
       showSnackBar(res, context);
+    } else {
+      //push replacement to prevent it go back to sign up screen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: ((context) => const ResponsiveLayout(
+              webScreenLayout: WebScreenLayout(),
+              mobileScreenLayout: MobileScreenLayout())),
+        ),
+      );
     }
-    setState(() {
-      _isLoading = false;
-    });
+  }
+
+  void navigateToLogin() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: ((context) => LoginScreen()),
+      ),
+    );
   }
 
   @override
@@ -188,12 +207,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  child: Text("Don't have an account?"),
+                  child: Text("Already have an account? "),
                   padding: const EdgeInsets.symmetric(vertical: 8),
                 ),
                 //use GestureDector not InkWell because this is a line of text
                 GestureDetector(
-                  onTap: () {},
+                  onTap: navigateToLogin,
                   child: Container(
                     child: Text(
                       "Sign in.",

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram_clone/resources/auth_methods.dart';
+import 'package:flutter_instagram_clone/screens/home_screens.dart';
+import 'package:flutter_instagram_clone/screens/sign_up_screen.dart';
 import 'package:flutter_instagram_clone/utils/colors.dart';
 import 'package:flutter_instagram_clone/utils/utils.dart';
 import 'package:flutter_instagram_clone/widgets/text_field_input.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -37,7 +43,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (res == "success") {
-      //
+      //push replacement to prevent it go back to sign in screen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: ((context) => const ResponsiveLayout(
+              webScreenLayout: WebScreenLayout(),
+              mobileScreenLayout: MobileScreenLayout())),
+        ),
+      );
     } else {
       //
       showSnackBar(res, context);
@@ -45,6 +58,14 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = false;
     });
+  }
+
+  void navigateToSignUp() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: ((context) => SignUpScreen()),
+      ),
+    );
   }
 
   @override
@@ -129,12 +150,12 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                child: Text("Don't have an account?"),
+                child: Text("Don't have an account? "),
                 padding: const EdgeInsets.symmetric(vertical: 8),
               ),
               //use GestureDector not InkWell because this is a line of text
               GestureDetector(
-                onTap: () {},
+                onTap: navigateToSignUp,
                 child: Container(
                   child: Text(
                     "Sign up.",
