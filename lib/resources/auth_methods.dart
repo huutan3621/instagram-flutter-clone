@@ -74,7 +74,7 @@ class AuthMethods {
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
         res = "success";
-        print(res);
+        print(res); // printout
       } else {
         res = "Please enter again!";
       }
